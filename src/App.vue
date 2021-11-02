@@ -1,7 +1,24 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <div class="grid-x main">
+      <div class="cell small-0 medium-3 large-3 ">
+        <div class="main_logo">
+          <img src="./assets/images/spiral.png"/>
+        </div>
+      </div>
+      <div class="cell small-12 medium-7 large-7 main_navbar">
+        <router-link to="/">Home</router-link>
+        <router-link to="/about">We do </router-link>
+        <router-link to="/about">Services </router-link>
+        <router-link to="/about">Project </router-link>
+        <router-link to="/about">Pricing </router-link>
+        <router-link to="/about">Blog </router-link>
+        <router-link to="/about">Contact </router-link>
+        <img src="./assets/images/search.png"/>
+      </div>
+      <div class="cell small-0 medium-2 large-2">
+      </div>
+    </div>
   </div>
   <router-view/>
 </template>
@@ -16,14 +33,13 @@
 }
 
 #nav {
-  padding: 30px;
-
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #000;
+    text-decoration: none;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #917ECE;
     }
   }
 }

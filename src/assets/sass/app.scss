@@ -1,7 +1,11 @@
+@import 'main/main';
+@import 'home/home';
+@import "../../../foundation/css/app.css";
+@import "../../../foundation/css/foundation.css";
+
 html, body{
   margin: 0;
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: hsl(226, 43%, 10%);
 }

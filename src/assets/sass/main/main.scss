@@ -1,0 +1,32 @@
+.main {
+
+  &_logo{
+
+    padding-top: 10px;
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 15px 10px 400px 10px;
+    background: #F1F5FE;
+    width: 200px;
+    height: 120px;
+
+    img{
+      width: 40px;
+      height: 40px;
+      //left : 0;
+      float: left;
+    }
+  }
+
+  &_navbar {
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    img{
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
