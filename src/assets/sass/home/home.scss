@@ -1,4 +1,4 @@
-.landing{
+.landing {
   &_home {
     &_invite {
       font-weight: bolder;
@@ -51,6 +51,7 @@
 
 
     }
+
     &_think {
       height: 600px;
       margin-top: -60px;
@@ -64,79 +65,76 @@
       }
     }
   }
-
-  &_entire{
+  &_entire {
     margin-left: 7%;
     margin-top: 7%;
-
-    h5{
+    h5 {
       margin-top: 2%;
       font-size: 20px;
       font-weight: 800;
       text-align: left;
     }
-
-    p{
+    p {
       font-size: 18px;
       line-height: 1.2em;
       text-align: left;
     }
-
-    &_statistics{
-      &_images{
+    &_statistics {
+      &_images {
         margin-top: 15%;
         @include rounded_boxes($light_yellow, 80px, 80px);
         text-align: center;
         position: relative;
-        img{
+
+        img {
           height: 40px !important;
           width: 40px !important;
-          top : 20% !important;
-          left : 25% !important;
+          top: 20% !important;
+          left: 25% !important;
           position: absolute;
         }
       }
     }
-
-    &_finances{
-      &_images{
+    &_finances {
+      &_images {
         margin-top: 15%;
         @include rounded_boxes($light_green, 80px, 80px);
         text-align: center;
         position: relative;
-        img{
+
+        img {
           height: 40px !important;
           width: 40px !important;
-          top : 20% !important;
-          left : 25% !important;
+          top: 20% !important;
+          left: 25% !important;
           position: absolute;
         }
       }
     }
-
-    &_market{
-      &_images{
+    &_market {
+      &_images {
         margin-top: 15%;
         @include rounded_boxes($light_purple, 80px, 80px);
         text-align: center;
         position: relative;
-        img{
+
+        img {
           height: 40px !important;
           width: 40px !important;
-          top : 20% !important;
-          left : 25% !important;
+          top: 20% !important;
+          left: 25% !important;
           position: absolute;
         }
       }
     }
   }
-
-  &_advertise{
+  &_advertise {
     margin-left: 7%;
 
-    &_ad{
+    &_ad {
       margin-top: 10%;
-      h3{
+
+      h3 {
         font-weight: bolder;
         font-size: 40px;
         color: black;
@@ -144,7 +142,7 @@
         text-align: left;
       }
 
-      h6{
+      h6 {
         padding-top: 10px;
         color: gray;
         font-weight: bold;
@@ -152,7 +150,7 @@
         text-align: left;
       }
 
-      p{
+      p {
         padding-top: 10px;
         font-size: 18px;
         line-height: 1.2em;
@@ -161,15 +159,16 @@
       }
     }
 
-    &_photos{
+    &_photos {
       margin-top: 7%;
-      &_top{
+
+      &_top {
         //top:0;
         //float: left;
         @include rounded_boxes($main_color, 150px, 150px);
       }
 
-      img{
+      img {
         margin-top: -17%;
         margin-left: -10%;
         z-index: 99;
@@ -178,7 +177,5 @@
       }
     }
   }
-
-
 }
 

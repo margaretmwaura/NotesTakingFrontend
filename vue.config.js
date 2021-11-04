@@ -13,5 +13,6 @@ module.exports = {
           ({...options, sourceMap: true})
         );
     });
+    config.module.rules.delete('eslint');
   },
 }

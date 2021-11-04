@@ -2,7 +2,7 @@
   <!--    <img alt="Vue logo" src="../assets/images/logo.png">-->
   <div class="landing">
     <div class="grid-x landing_home">
-      <div class="cell small-12 medium-5 large-5 landing_home_invite">
+      <div data-aos="zoom-in-up" class="cell small-12 medium-5 large-5 landing_home_invite">
         <p>A digital product
           <br>
           design agency
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="grid-x landing_entire">
-      <div class="cell small-12 medium-4 large-4 landing_entire_statistics">
+      <div data-aos="fade-right" class="cell small-12 medium-4 large-4 landing_entire_statistics">
         <div class="landing_entire_statistics_images">
           <img src="../assets/images/increase.png">
         </div>
@@ -47,7 +47,7 @@
           its goals
         </p>
       </div>
-      <div class="cell small-12 medium-4 large-4 landing_entire_market">
+      <div data-aos="fade-left" class="cell small-12 medium-4 large-4 landing_entire_market">
         <div class="landing_entire_market_images">
           <img src="../assets/images/magnifier.png">
         </div>
@@ -77,7 +77,7 @@
       <div class="cell small-12 medium-6 large-6 landing_advertise_photos">
           <div class="landing_advertise_photos_top">
           </div>
-        <img src="../assets/images/conversation.jpeg">
+        <img data-aos="flip-right" src="../assets/images/conversation.jpeg">
       </div>
     </div>
   </div>
@@ -88,6 +88,7 @@
 
 export default {
   name: 'Home',
-  components: {}
+  components: {},
 }
 </script>
+
