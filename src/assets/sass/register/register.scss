@@ -1,0 +1,58 @@
+.register{
+
+  &_cover{
+    font-weight: bolder;
+    font-size: 30px;
+    color: black;
+    position: relative;
+
+    p{
+      text-align: center;
+      position: absolute;
+      line-height: 1.2em;
+      top: 10%;
+      left: 20%;
+    }
+    img{
+      position: absolute;
+      margin-top: 20%;
+      height: 400px;
+      width: 500px;
+      left: 20%;
+      background-size: cover;
+    }
+  }
+
+  &_forms{
+    height: 600px;
+    width: 500px;
+    margin-left: 5%;
+    background: $light_purple;
+    //text-align: left;
+
+    label{
+      color: black;
+      font-size: 15px;
+    }
+
+    input{
+      background: $light_purple;
+      border: $light_purple;
+      width: 80%;
+      border-bottom: 1px solid black;
+      margin-left: 10px;
+      margin-right: 10px;
+      //text-align: center;
+    }
+
+    button {
+      @include rounded_boxes($main_color, 200px, 40px);
+      font-size: 18px !important;
+      font-weight: 700 !important;
+    }
+
+    &_signup{
+      padding-top: 20% !important;
+    }
+  }
+}

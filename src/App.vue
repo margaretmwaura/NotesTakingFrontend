@@ -13,7 +13,7 @@
         <router-link to="/about">Project </router-link>
         <router-link to="/about">Pricing </router-link>
         <router-link to="/about">Blog </router-link>
-        <router-link to="/about">Contact </router-link>
+        <router-link to="/signup">Signup </router-link>
         <img src="./assets/images/search.png"/>
       </div>
       <div class="cell small-0 medium-2 large-2">
