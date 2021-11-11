@@ -39,7 +39,7 @@
 
 <script>
 
-import {mapActions, mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true;
@@ -58,20 +58,12 @@ export default {
       },
     }
   },
-  methods: {
-    ...mapActions(['settoken', 'login']),
+
+  //Note to self mapGetters is not called like a function but like a variable
+  computed:{
     ...mapGetters(['getToken']),
-    // async login(){
-    //   this.processing = true
-    //   await axios.get('/sanctum/csrf-cookie')
-    //   await axios.post('/login',this.auth).then(({data})=>{
-    //     this.signIn()
-    //   }).catch(({response:{data}})=>{
-    //     alert(data.message)
-    //   }).finally(()=>{
-    //
-    //   })
-    // },
+  },
+  methods: {
     async register() {
       await axios.get('/sanctum/csrf-cookie')
       await axios.post("/register", this.user).then(({data})=>{
@@ -83,11 +75,11 @@ export default {
       })
     },
     getCurrentUser(token){
-      console.log(this.$store.state.token)
+      // console.log(this.$store.state.token)
+      // console.log(this.getToken)
       axios.get('/api/user',{ headers: {
           'Authorization': `Bearer ${token}`
         },}).then(({data}) =>{
-
       });
     },
   },
