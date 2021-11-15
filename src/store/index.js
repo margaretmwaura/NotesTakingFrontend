@@ -37,7 +37,7 @@ export default createStore({
     settoken({commit}, token){
       commit('SET_TOKEN', token)
     },
-    login({commit}, user, token) {
+    login({commit}, user) {
       commit('SET_USER', user)
       commit('SET_AUTHENTICATED', true)
     },

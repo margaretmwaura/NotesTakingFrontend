@@ -91,6 +91,7 @@ export default {
           'Authorization': `Bearer ${token}`
         },
       }).then(({data}) => {
+        this.$store.dispatch('login', data)
       });
     },
     start_signup() {
