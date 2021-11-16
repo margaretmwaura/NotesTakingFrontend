@@ -15,7 +15,7 @@
       </div>
       <div class="cell small-12 medium-6 large-6 ">
         <div class="register_forms">
-          <div class="grid-x grid-margin-y register_forms_signup">
+          <div class="grid-x grid-margin-y register_forms_signup" v-show="signup">
             <div class="cell small-12 medium-12 large-12 register_forms_signup_switch">
               <button class="signup" v-on:click="start_signup"
                       v-bind:class="{ isActive:signup , isNotActive:login }">Signup
@@ -58,6 +58,46 @@
             <div class="cell small-12 medium-12 large-12 register_forms_signup_action">
               <button v-on:click="register">
                 Signup
+              </button>
+            </div>
+          </div>
+          <div class="grid-x grid-margin-y register_forms_signup" v-show="login">
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_switch">
+              <button class="signup" v-on:click="start_signup"
+                      v-bind:class="{ isActive:signup , isNotActive:login }">Signup
+              </button>
+              <button class="login" v-on:click="start_login"
+                      v-bind:class="{ isActive:login , isNotActive:signup }">Login
+              </button>
+            </div>
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_pr">
+              <p>Welcome Partner</p>
+              <p>It is a pleasure having you back</p>
+            </div>
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
+              <label>Username <span>*</span></label>
+              <input v-model="auth.username" placeholder="gregory@gmail.com"  type="text">
+              <i class="far fa-envelope-open" aria-hidden="true"></i>
+            </div>
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
+              <label>Password <span>*</span></label>
+              <input v-model="auth.password" placeholder="123" :type="passwordFieldType" type="text">
+              <i class="far" :class="[showPassword ? 'fa-eye' : 'fa-eye-slash']"
+                 aria-hidden="true"
+                 @click="switchVisibility"></i>
+            </div>
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_disclaimer">
+              <ul class="mandatory">
+                <li>Contains at-least one uppercase</li>
+                <li>Contains at-least one letter</li>
+              </ul>
+              <ul class="optional">
+                <li>Contains at-least one special character</li>
+              </ul>
+            </div>
+            <div class="cell small-12 medium-12 large-12 register_forms_signup_action">
+              <button v-on:click="register">
+                Login
               </button>
             </div>
           </div>

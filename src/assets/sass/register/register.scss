@@ -97,6 +97,18 @@
         }
       }
 
+      &_pr{
+        p{
+          top: 5% !important;
+          float: left !important;
+          font-weight: bolder !important;
+          font-size: 26px !important;
+          color: black !important;
+          padding-left: 10%;
+          line-height: 0.9em !important;
+        }
+      }
+
       &_names{
         position:relative;
         input {
