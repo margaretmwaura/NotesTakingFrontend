@@ -6,14 +6,10 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Toaster from '@meforma/vue-toaster';
 
+import VueSidebarMenu from 'vue-sidebar-menu'
+
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+
 require('./assets/sass/app.scss')
 
-// new Vue({
-//   created () {
-//     AOS.init()
-//   },
-//   render: h => h(App),
-// }).$mount('#app');
-
-// TODO must sort this to accommodate for the function
-createApp(App).use(AOS.init()).use(Toaster).use(store).use(router).mount('#app')
+createApp(App).use(AOS.init()).use(Toaster).use(VueSidebarMenu).use(store).use(router).mount('#app')

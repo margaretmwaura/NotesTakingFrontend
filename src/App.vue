@@ -9,7 +9,7 @@
       <div class="cell small-12 medium-7 large-7 main_navbar">
         <router-link to="/">Home</router-link>
         <router-link to="/about">We do </router-link>
-        <router-link to="/about">Services </router-link>
+        <router-link to="/dashboard">Dashboard </router-link>
         <router-link to="/about">Project </router-link>
         <router-link to="/about">Pricing </router-link>
         <router-link to="/about">Blog </router-link>

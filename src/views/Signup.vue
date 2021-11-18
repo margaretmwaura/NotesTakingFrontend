@@ -152,7 +152,7 @@ export default {
         this.$store.dispatch('settoken', data.token)
         if (data.status === 200) {
           this.$toast.success(`Signup was successful`);
-          this.$router.push({name: 'About'})
+          this.$router.push({name: 'Dashboard'})
         } else {
           this.$toast.error(`Signup failed`);
         }
@@ -169,7 +169,7 @@ export default {
         this.$store.dispatch('settoken', data.token)
         if (data.status === 200) {
           this.$toast.success(`Login was successful`);
-          this.$router.push({name: 'About'})
+          this.$router.push({name: 'Dashboard'})
         } else {
           this.$toast.error(`Login failed`);
         }

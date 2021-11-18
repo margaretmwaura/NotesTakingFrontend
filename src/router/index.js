@@ -32,7 +32,15 @@ const routes = [
     meta:{
       middleware:"guest",
     }
-  }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue'),
+    meta:{
+      middleware:"auth"
+    },
+  },
 ]
 
 const router = createRouter({

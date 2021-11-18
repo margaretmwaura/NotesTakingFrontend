@@ -16,6 +16,7 @@
     "stylus-loader": "^3.0.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue-sidebar-menu": "^5.1.2",
     "vue3-material": "^1.0.8"
   },
   "devDependencies": {
