@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import Toaster from '@meforma/vue-toaster';
 
 require('./assets/sass/app.scss')
 
@@ -15,4 +16,4 @@ require('./assets/sass/app.scss')
 // }).$mount('#app');
 
 // TODO must sort this to accommodate for the function
-createApp(App).use(AOS.init()).use(store).use(router).mount('#app')
+createApp(App).use(AOS.init()).use(Toaster).use(store).use(router).mount('#app')

@@ -10,7 +10,10 @@
         </p>
         <img src="../assets/images/signup2.jpeg">
         <h6>
-          Collaboration in a workplace involves a group of people sharing their ideas and skills in order to achieve a common goal. Working collaboratively, instead of individually, helps improve productivity and gives employees a sense of purpose in the organization. It also becomes easier to brainstorm ideas to solve an existing problem or deliver the required work on time.
+          Collaboration in a workplace involves a group of people sharing their ideas and skills in order to achieve a
+          common goal. Working collaboratively, instead of individually, helps improve productivity and gives employees
+          a sense of purpose in the organization. It also becomes easier to brainstorm ideas to solve an existing
+          problem or deliver the required work on time.
         </h6>
       </div>
       <div class="cell small-12 medium-6 large-6 ">
@@ -31,12 +34,12 @@
             </div>
             <div class="cell small-12 medium-6 large-6 register_forms_signup_names">
               <label>Last Name <span>*</span></label>
-              <input v-model="lname" placeholder="Doe"  type="text">
+              <input v-model="lname" placeholder="Doe" type="text">
               <i class="fa fa-user " aria-hidden="true"></i>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
               <label>Email <span>*</span></label>
-              <input v-model="user.email" placeholder="gregory@gmail.com"  type="email">
+              <input v-model="user.email" placeholder="gregory@gmail.com" type="email">
               <i class="far fa-envelope-open" aria-hidden="true"></i>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
@@ -56,7 +59,7 @@
               </ul>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_action">
-              <button v-on:click="register">
+              <button v-on:click="registerUser">
                 Signup
               </button>
             </div>
@@ -75,8 +78,8 @@
               <p>It is a pleasure having you back</p>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
-              <label>Username <span>*</span></label>
-              <input v-model="auth.username" placeholder="gregory@gmail.com"  type="text">
+              <label>Email <span>*</span></label>
+              <input v-model="auth.email" placeholder="gregory@gmail.com" type="text">
               <i class="far fa-envelope-open" aria-hidden="true"></i>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_details">
@@ -96,7 +99,7 @@
               </ul>
             </div>
             <div class="cell small-12 medium-12 large-12 register_forms_signup_action">
-              <button v-on:click="register">
+              <button v-on:click="loginUser">
                 Login
               </button>
             </div>
@@ -130,26 +133,49 @@ export default {
       signup: true,
       showPassword: false,
       passwordFieldType: "password",
-      fname : '',
-      lname : ''
+      fname: '',
+      lname: ''
     }
   },
   //Note to self mapGetters is not called like a function but like a variable
   computed: {
     ...mapGetters(['getToken']),
-    username : function (){
+    username: function () {
       return this.fname + this.lname
     }
   },
   methods: {
-    async register() {
+    async registerUser() {
       await axios.get('/sanctum/csrf-cookie')
       this.user.name = this.username
       await axios.post("/register", this.user).then(({data}) => {
         this.$store.dispatch('settoken', data.token)
+        if (data.status === 200) {
+          this.$toast.success(`Signup was successful`);
+          this.$router.push({name: 'About'})
+        } else {
+          this.$toast.error(`Signup failed`);
+        }
         this.getCurrentUser(data.token)
       }).catch(({response: {data}}) => {
-        alert(data.message)
+        this.$toast.error(`Signup failed`);
+      }).finally(() => {
+      })
+    },
+    async loginUser() {
+      await axios.get('/sanctum/csrf-cookie')
+      await axios.post("/login", this.auth).then(({data}) => {
+        console.log(data)
+        this.$store.dispatch('settoken', data.token)
+        if (data.status === 200) {
+          this.$toast.success(`Login was successful`);
+          this.$router.push({name: 'About'})
+        } else {
+          this.$toast.error(`Login failed`);
+        }
+        this.getCurrentUser(data.token)
+      }).catch(({response: {data}}) => {
+        this.$toast.error(`Login failed`);
       }).finally(() => {
       })
     },
