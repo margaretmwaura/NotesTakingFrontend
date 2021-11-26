@@ -145,7 +145,8 @@ export default {
         if (data.status === 200) {
           this.$store.dispatch('login', data.data)
           this.$toast.success(`Signup was successful`);
-          this.$router.push({name: 'Dashboard'})
+          this.$router.push({name: 'Notes'})
+          // window.location.href = '/dashboard';
         } else {
           this.$toast.error(`Signup failed`);
         }
@@ -163,6 +164,7 @@ export default {
           this.$store.dispatch('login', data.data)
           this.$toast.success(`Login was successful`);
           this.$router.push({name: 'Dashboard'})
+          // window.location.href = '/dashboard';
         } else {
           this.$toast.error(`Login failed`);
         }

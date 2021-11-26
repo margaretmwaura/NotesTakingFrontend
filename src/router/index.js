@@ -40,6 +40,15 @@ const routes = [
     meta:{
       middleware:"auth"
     },
+    children: [
+    ]
+  },
+  {
+    // UserProfile will be rendered inside User's <router-view>
+    // when /user/:id/profile is matched
+    path: '/notes',
+    name: 'Notes',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Notes.vue'),
   },
 ]
 

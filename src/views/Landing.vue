@@ -1,21 +1,17 @@
 <template>
   <div v-if="!isAuthenticated">
-    <landing></landing>
+    <navbar></navbar>
   </div>
-  <div v-else>
-    <dashboard></dashboard>
-  </div>
+  <router-view/>
 </template>
 
 
 <script>
 // @ is an alias to /src
-import landing from './views/Landing'
-import dashboard from './views/Dashboard'
+import navbar from '../views/Navbar'
 export default {
   components: {
-    landing,
-    dashboard
+    navbar
   },
   computed: {
     isAuthenticated : function(){

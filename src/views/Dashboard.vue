@@ -37,9 +37,9 @@ export default {
           hiddenOnCollapse: true
         },
         {
-          href: '/dashboard',
-          title: 'Suppliers',
-          icon: 'fa fa-chart-pie'
+          href: '/notes',
+          title: 'Notes',
+          icon: 'fa fa-user'
         },
         {
           href: '/products',
@@ -89,6 +89,16 @@ export default {
         this.$toast.error(`Logout failed`);
       })
     }
+  },
+  mounted() {
+    // console.log("we here")
+    // console.log(this.$store.state.token)
+    this.$router.push({name: 'Notes'})
+  },
+  created() {
+    // console.log("we here")
+    // console.log(this.$store.state.token)
+    this.$router.push({name: 'Notes'})
   }
 }
 </script>

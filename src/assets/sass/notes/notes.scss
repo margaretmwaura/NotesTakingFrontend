@@ -1,0 +1,9 @@
+.notes{
+  margin-top: 150px;
+  height: 500px;
+
+  &_content{
+    background: $lighter_purple;
+    height: 500px;
+  }
+}
