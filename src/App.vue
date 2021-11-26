@@ -1,27 +1,26 @@
 <template>
-  <div id="nav">
-    <div class="grid-x main">
-      <div class="cell small-0 medium-3 large-3 ">
-        <div class="main_logo">
-          <img src="./assets/images/spiral.png"/>
-        </div>
-      </div>
-      <div class="cell small-12 medium-7 large-7 main_navbar">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">We do </router-link>
-        <router-link to="/dashboard">Dashboard </router-link>
-        <router-link to="/about">Project </router-link>
-        <router-link to="/about">Pricing </router-link>
-        <router-link to="/about">Blog </router-link>
-        <router-link to="/signup">Signup </router-link>
-        <img src="./assets/images/search.png"/>
-      </div>
-      <div class="cell small-0 medium-2 large-2">
-      </div>
-    </div>
+  <div v-if="!isAuthenticated">
+    <navbar></navbar>
   </div>
   <router-view/>
 </template>
+
+
+<script>
+// @ is an alias to /src
+import navbar from './views/Navbar'
+export default {
+  components: {
+    navbar
+  },
+  computed: {
+    isAuthenticated : function(){
+      console.log("In App.vue " + this.$store.state.authenticated);
+      return this.$store.state.authenticated
+    },
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

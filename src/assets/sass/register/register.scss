@@ -41,6 +41,27 @@
     background: $lighter_purple;
     //text-align: left;
 
+    &_switch {
+      //left: 0;
+      position: relative;
+      padding-bottom: 10%;
+      padding-top: 5%;
+      .signup {
+        //left: 7%;
+        position: absolute;
+        @include rounded_boxes($main_color, 150px, 40px);
+        font-size: 18px !important;
+        font-weight: 700 !important;
+      }
+      .login {
+        right: 45%;
+        position: absolute;
+        @include rounded_boxes($dark_purple, 150px, 40px);
+        font-size: 18px !important;
+        font-weight: 700 !important;
+      }
+    }
+
     &_signup {
 
       padding-top: 10% !important;
@@ -75,26 +96,6 @@
       ::placeholder {
         color: gray;
         opacity: 1; /* Firefox */
-      }
-
-      &_switch {
-        //left: 0;
-        position: relative;
-        padding-bottom: 10%;
-        .signup {
-          //left: 7%;
-          position: absolute;
-          @include rounded_boxes($main_color, 150px, 40px);
-          font-size: 18px !important;
-          font-weight: 700 !important;
-        }
-        .login {
-          right: 45%;
-          position: absolute;
-          @include rounded_boxes($dark_purple, 150px, 40px);
-          font-size: 18px !important;
-          font-weight: 700 !important;
-        }
       }
 
       &_pr{
