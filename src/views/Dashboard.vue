@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div id="view" :class="{'collapsed' : collapsed}">
-      <div>
-        <img src="../assets/images/delivery-man.svg" >
-        <div v-on:click="showLogoutIcon"><i class="fa fa-caret-down"></i></div>
+    <div id="view" :class="{'collapsed' : collapsed}" class="dashboard grid-x">
+      <div class="dashboard_topbar cell small-12 medium-12 large-12">
+        <img src="../assets/images/delivery-man.svg">
+        <div v-on:click="showLogoutIcon" class="dashboard_topbar_dropdown"><i class="fa fa-caret-down"></i></div>
       </div>
-      <div v-show="showLogout">
+      <div class="dashboard_logout cell small-1 medium-1 large-1" v-show="showLogout">
         <p v-on:click="logOut">Log out</p>
       </div>
       <router-view>
@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import {mapGetters} from 'vuex'
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8400"
 
@@ -52,8 +53,11 @@ export default {
         }
       ],
       collapsed: true,
-      showLogout : false
+      showLogout: false
     }
+  },
+  computed: {
+    ...mapGetters(['getToken'])
   },
   methods: {
     onItemClick(e, i) {
@@ -61,22 +65,27 @@ export default {
     onCollapse(c) {
       this.collapsed = c;
     },
-    showLogoutIcon(){
-      if(this.showLogout === false){
+    showLogoutIcon() {
+      if (this.showLogout === false) {
         this.showLogout = true
-      }else {
+      } else {
         this.showLogout = false
       }
     },
-    logOut(){
-      axios.post('logout', this.form).then(({data}) => {
-          if (data.status === 200) {
-            this.$toast.success(`Logout was successful`);
-            this.$router.push({name: 'Home'})
-          } else {
-            this.$toast.error(`Logout failed`);
-          }
-      },  () => {
+    async logOut() {
+      await axios.post('logout',{
+        headers: {
+          'Authorization': `Bearer ${this.getToken}`
+        },
+      }).then(({data}) => {
+        if (data.status === 200) {
+          this.$toast.success(`Logout was successful`);
+          this.$store.dispatch('logout')
+          this.$router.push({name: 'Home'})
+        } else {
+          this.$toast.error(`Logout failed`);
+        }
+      }, () => {
         this.$toast.error(`Logout failed`);
       })
     }
@@ -88,6 +97,7 @@ export default {
 #view {
   padding-left: 350px;
 }
+
 #view.collapsed {
   padding-left: 50px;
 }

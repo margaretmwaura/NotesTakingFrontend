@@ -1,0 +1,45 @@
+.dashboard{
+  position: relative;
+
+  &_topbar{
+    position: relative;
+    height: 70px;
+    background: ghostwhite;
+    box-shadow: 10px 10px 5px 12px grey;
+
+    img{
+      margin-top: 10px;
+      margin-right: 50px;
+      //position: absolute;
+      height: 40px;
+      width: 40px;
+      float: right;
+    }
+
+    &_dropdown{
+      margin-top: 10px;
+      right: 10px;
+      position: absolute;
+      height: 40px;
+      width: 40px;
+
+    }
+  }
+
+  &_logout{
+    margin-top: 100px;
+    position: absolute;
+    right: 0;
+    height: 50px;
+    width: 50px;
+    background: ghostwhite;
+    box-shadow: 10px 10px 5px grey;
+
+    p{
+      font-weight: bolder;
+      font-size: 20px;
+      text-align: center;
+      padding-top: 10px;
+    }
+  }
+}
