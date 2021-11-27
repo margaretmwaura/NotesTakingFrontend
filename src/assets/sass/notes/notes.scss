@@ -1,9 +1,62 @@
-.notes{
-  margin-top: 150px;
-  height: 500px;
+.notes {
+  margin-top: 60px;
+  height: 700px;
+  margin-left: 80px;
+  width: 100%;
 
-  &_content{
+  &_content {
     background: $lighter_purple;
-    height: 500px;
+    height: 700px;
+    padding-top: 50px;
+    padding-left: 10px;
+
+    &_form {
+      display: flex;
+      width: 100%;
+      margin-bottom: 15px;
+      height: 40px;
+      position: relative;
+
+      /* Style the form icons */
+      .icon {
+        position: absolute;
+        padding: 10px;
+        color: black;
+        min-width: 50px;
+        text-align: center;
+      }
+
+      input[type=text], input[type=password], input[type=email]:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid dodgerblue !important;
+      }
+
+      input[type=text] ,input[type=password], input[type=email]{
+        border: $lighter_purple !important;
+        background: $lighter_purple;
+        width: 70%;
+        padding-left: 7%;
+        outline: none !important;
+        border-bottom: 1px solid black !important;
+        box-shadow: none !important;
+      }
+
+      ::placeholder {
+        color: gray;
+        opacity: 1; /* Firefox */
+      }
+
+      button{
+        width: 20%;
+        background: $main_color;
+        font-size: 16px;
+        font-weight: bolder;
+        border-radius: 5px;
+        color: white;
+        margin-left: 2%;
+      }
+
+    }
   }
 }
