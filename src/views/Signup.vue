@@ -146,7 +146,6 @@ export default {
           this.$store.dispatch('login', data.data)
           this.$toast.success(`Signup was successful`);
           this.$router.push({name: 'Notes'})
-          // window.location.href = '/dashboard';
         } else {
           this.$toast.error(`Signup failed`);
         }
