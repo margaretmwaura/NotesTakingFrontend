@@ -158,13 +158,11 @@ export default {
     async loginUser() {
       await axios.get('/sanctum/csrf-cookie')
       await axios.post("/login", this.auth).then(({data}) => {
-        console.log(data)
         this.$store.dispatch('settoken', data.token)
         if (data.status === 200) {
           this.$store.dispatch('login', data.data)
           this.$toast.success(`Login was successful`);
           this.$router.push({name: 'Dashboard'})
-          // window.location.href = '/dashboard';
         } else {
           this.$toast.error(`Login failed`);
         }
@@ -172,17 +170,6 @@ export default {
         this.$toast.error(`Login failed`);
       }).finally(() => {
       })
-    },
-    getCurrentUser(token) {
-      // console.log(this.$store.state.token)
-      // console.log(this.getToken)
-      axios.get('/api/user', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-      }).then(({data}) => {
-        this.$store.dispatch('login', data)
-      });
     },
     start_signup() {
       this.login = false;

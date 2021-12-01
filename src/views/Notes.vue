@@ -17,6 +17,9 @@
 
 <script>
 
+import {mapGetters} from 'vuex'
+import axios from '../backend-api'
+
 export default {
   data() {
     return {
@@ -24,12 +27,21 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getToken']),
     show_button: function () {
       return (this.note || this.note.length > 0);
     }
   },
+  methods:{
+    async addAToDo (){
+      axios.get('/api/add_a_task', { "note" : this.note}).then(({data}) => {
+        this.$toast.success(`Adding a task was successful`);
+      }).catch(({response: {data}}) => {
+        this.$toast.error(`Adding of a task was unsuccessful`);
+      })
+    },
+  },
   mounted(){
-    this.$refs.noteRef.blur()
   }
 }
 </script>

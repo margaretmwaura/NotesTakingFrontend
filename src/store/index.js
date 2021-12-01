@@ -1,9 +1,5 @@
 import {createStore} from 'vuex'
-import axios from 'axios'
 import router from '../router'
-
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8400"
 
 export default createStore({
   state: {
