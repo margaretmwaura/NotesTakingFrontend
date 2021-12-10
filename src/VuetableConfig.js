@@ -15,10 +15,10 @@ export default {
     handleIcon: 'fa fa-bars text-secondary',
     renderIcon(classes, options) {
       return `<i class="${classes.join(' ')}"></span>`
-    }
+    },
   },
   pagination: {
-    wrapperClass: 'pagination float-right',
+    wrapperClass: 'pagination float-left',
     activeClass: 'active',
     disabledClass: 'disabled',
     pageClass: 'page-item',
@@ -31,6 +31,6 @@ export default {
       prev: 'fa fa-chevron-left',
       next: 'fa fa-chevron-right',
       last: 'fa fa-chevron-right',
-    }
+    },
   }
 }

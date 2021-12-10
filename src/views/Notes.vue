@@ -24,6 +24,7 @@
       </div>
       <div>
         <vuetable ref="vuetable"
+                  :row-class="onRowClass"
                   :css="css.table"
                   :fields="fields"
                   :api-mode="false"
@@ -44,12 +45,12 @@
 import moment from 'moment'
 import {mapGetters} from 'vuex'
 import axios from '../backend-api'
-import Vuetable from './../../node_modules/vue3-vuetable/src/components/Vuetable'
+import Vuetable from './../../node_modules/vuetable-2/src/components/Vuetable'
 import CssConfig from "../VuetableConfig";
 
 export default {
   components: {
-    Vuetable
+    Vuetable,
   },
   data() {
     return {
@@ -65,7 +66,11 @@ export default {
       fields: [
         {
           name: 'task',
-          title: 'Task'
+          title: '',
+        },
+        {
+          name: '__component:custom_actions',
+          title: '',
         },
       ],
     }
@@ -120,16 +125,27 @@ export default {
           this.pinned_notes = data.data.filter(note => note.pinned === 1)
           this.normal_notes = data.data.filter(note => note.pinned === 0)
 
-          console.log("Pinned notes " + this.pinned_notes)
-          console.log("Normal notes " + this.normal_notes)
+          //TODO This was useful in adding of a new variable to an object
+          // let count = 0;
+          // this.normal_notes.forEach((item) => {
+          //   this.$set(item, 'itemIndex', count)
+          //   this.$set(item, 'fieldIndex', count)
+          //   count++
+          // })
+
+          console.log("Pinned notes " + this.pinned_notes[0])
+          console.log("Normal notes " + this.normal_notes[0])
 
           this.$refs.vuetable.refresh()
         } else {
-          this.$toast.error(`Adding of a task was unsuccessful`);
+          this.$toast.error(`Getting of data unsuccessful`);
         }
-      }).catch(({response: {data}}) => {
-        this.$toast.error(`Adding of a task was unsuccessful`);
+      }).catch(() => {
+        this.$toast.error(`Getting of data unsuccessful`);
       })
+    },
+    onRowClass (dataItem, index) {
+      return 'rowStyling';
     }
   },
   mounted() {
@@ -154,5 +170,24 @@ export default {
 
 .isDisplay {
   text-decoration: underline double red;
+}
+
+.rowStyling{
+  text-align: left;
+  background: #F1F5FE !important;
+}
+
+.vuetable-th-task{
+  padding: 0 !important;
+  background: #F1F5FE !important;
+}
+
+.vuetable-th-component-id{
+  padding: 0 !important;
+  background: #F1F5FE !important;
+}
+
+.vuetable-body{
+  border: none !important;
 }
 </style>

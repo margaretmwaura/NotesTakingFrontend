@@ -15,4 +15,11 @@ module.exports = {
     });
     config.module.rules.delete('eslint');
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: `@import "@/assets/sass/_colors.scss";`
+      }
+    }
+  }
 }
