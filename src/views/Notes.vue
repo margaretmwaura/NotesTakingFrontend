@@ -48,6 +48,7 @@ import axios from '../backend-api'
 import Vuetable from './../../node_modules/vuetable-2/src/components/Vuetable'
 import CssConfig from "../VuetableConfig";
 
+
 export default {
   components: {
     Vuetable,
@@ -64,6 +65,10 @@ export default {
       pinned_notes: [],
       normal_notes: [],
       fields: [
+        {
+          name: '__component:complete_task',
+          title: '',
+        },
         {
           name: 'task',
           title: '',

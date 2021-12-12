@@ -55,7 +55,7 @@ export default {
     flex-direction: column;
     border-radius: 5px;
     z-index: 2;
-    left: -220%;
+    right: 42%;
     @media screen and (max-width: 992px) {
       width: 90%;
     }
