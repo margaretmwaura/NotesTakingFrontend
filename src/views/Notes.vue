@@ -94,16 +94,18 @@ export default {
   },
   methods: {
     async addAToDo() {
-      await axios.post('/api/note', {"task": this.note}).then(({data}) => {
-        if (data.status === 200) {
-          this.$toast.success(`Adding a task was successful`);
-          this.note = ''
-        } else {
+      await axios.post('/api/note', {"task": this.note}).then(
+          async ({data}) => {
+            if (data.status === 200) {
+              this.$toast.success(`Adding a task was successful`);
+              this.note = ''
+              await this.getAllUserNotes();
+            } else {
+              this.$toast.error(`Adding of a task was unsuccessful`);
+            }
+          }).catch(({response: {data}}) => {
           this.$toast.error(`Adding of a task was unsuccessful`);
-        }
-      }).catch(({response: {data}}) => {
-        this.$toast.error(`Adding of a task was unsuccessful`);
-      })
+        })
     },
     displayDialy() {
       this.daily_display = true;
@@ -149,7 +151,7 @@ export default {
         this.$toast.error(`Getting of data unsuccessful`);
       })
     },
-    onRowClass (dataItem, index) {
+    onRowClass(dataItem, index) {
       return 'rowStyling';
     }
   },
@@ -177,22 +179,22 @@ export default {
   text-decoration: underline double red;
 }
 
-.rowStyling{
+.rowStyling {
   text-align: left;
   background: #F1F5FE !important;
 }
 
-.vuetable-th-task{
+.vuetable-th-task {
   padding: 0 !important;
   background: #F1F5FE !important;
 }
 
-.vuetable-th-component-id{
+.vuetable-th-component-id {
   padding: 0 !important;
   background: #F1F5FE !important;
 }
 
-.vuetable-body{
+.vuetable-body {
   border: none !important;
 }
 </style>
