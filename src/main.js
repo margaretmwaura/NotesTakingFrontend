@@ -13,6 +13,9 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 
+import mitt from 'mitt';
+const emitter = mitt();
+
 require('./assets/sass/app.scss')
 
 const app = createApp(App)
@@ -45,6 +48,8 @@ requireComponent.keys().forEach(fileName => {
     componentConfig.default || componentConfig
   )
 })
+
+app.config.globalProperties.emitter = emitter;
 
 app.use(AOS.init())
   .use(Toaster)

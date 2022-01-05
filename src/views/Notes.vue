@@ -48,7 +48,6 @@ import axios from '../backend-api'
 import Vuetable from './../../node_modules/vuetable-2/src/components/Vuetable'
 import CssConfig from "../VuetableConfig";
 
-
 export default {
   components: {
     Vuetable,
@@ -95,17 +94,17 @@ export default {
   methods: {
     async addAToDo() {
       await axios.post('/api/note', {"task": this.note}).then(
-          async ({data}) => {
-            if (data.status === 200) {
-              this.$toast.success(`Adding a task was successful`);
-              this.note = ''
-              await this.getAllUserNotes();
-            } else {
-              this.$toast.error(`Adding of a task was unsuccessful`);
-            }
-          }).catch(({response: {data}}) => {
-          this.$toast.error(`Adding of a task was unsuccessful`);
-        })
+        async ({data}) => {
+          if (data.status === 200) {
+            this.$toast.success(`Adding a task was successful`);
+            this.note = ''
+            await this.getAllUserNotes();
+          } else {
+            this.$toast.error(`Adding of a task was unsuccessful`);
+          }
+        }).catch(({response: {data}}) => {
+        this.$toast.error(`Adding of a task was unsuccessful`);
+      })
     },
     displayDialy() {
       this.daily_display = true;
@@ -126,7 +125,9 @@ export default {
       this.date_in_numbers = this.current_date.format('MMM Do YY')
     },
     async getAllUserNotes() {
-      await axios.get('/api/notes', {"task": this.note}).then(({data}) => {
+      axios.defaults.headers.authorization = `Bearer ${this.getToken}`
+      await axios.get('/api/notes',
+        {"task": this.note}).then(({data}) => {
         if (data.status === 200) {
 
           this.pinned_notes = data.data.filter(note => note.pinned === 1)
@@ -143,7 +144,6 @@ export default {
           console.log("Pinned notes " + this.pinned_notes[0])
           console.log("Normal notes " + this.normal_notes[0])
 
-          this.$refs.vuetable.refresh()
         } else {
           this.$toast.error(`Getting of data unsuccessful`);
         }
@@ -157,7 +157,10 @@ export default {
   },
   mounted() {
     this.getAllUserNotes()
-  }
+    this.emitter.on("reload-table", () => {
+      this.getAllUserNotes()
+    })
+  },
 }
 </script>
 

@@ -23,12 +23,13 @@ export default {
     modal
   },
   props: {
-    // rowData: {
-    //     required: true
-    // },
-    // rowIndex: {
-    //     type: Number
-    // }
+    rowData: {
+        type : Object,
+        required: true
+    },
+    rowIndex: {
+        type: Number
+    }
   },
   methods: {
     edit() {
