@@ -13,7 +13,7 @@
           <br>
           <span>{{ date_in_numbers }}</span>
         </p>
-        <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay"></i>
+        <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay" v-if="loadMore"></i>
       </div>
       <div class="notes_content_form">
         <i class="fa fa-bars icon"></i>
@@ -77,6 +77,8 @@ export default {
           title: '',
         },
       ],
+      firstRecordDate: moment(),
+      loadMore : true
     }
   },
   computed: {
@@ -118,16 +120,17 @@ export default {
       this.current_date = this.current_date.add(1, 'days');
       this.date_in_words = this.current_date.format('dddd')
       this.date_in_numbers = this.current_date.format('MMM Do YY')
+      this.loadMoreRecords();
     },
     reduceByOneDay() {
       this.current_date = this.current_date.subtract(1, 'days');
       this.date_in_words = this.current_date.format('dddd')
       this.date_in_numbers = this.current_date.format('MMM Do YY')
+      this.loadMoreRecords();
     },
     async getAllUserNotes() {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
-      await axios.get('/api/notes',
-        {"task": this.note}).then(({data}) => {
+      await axios.get('/api/notes').then(({data}) => {
         if (data.status === 200) {
 
           this.pinned_notes = data.data.filter(note => note.pinned === 1)
@@ -153,10 +156,34 @@ export default {
     },
     onRowClass(dataItem, index) {
       return 'rowStyling';
+    },
+    async getTheOldestNote() {
+      axios.defaults.headers.authorization = `Bearer ${this.getToken}`
+      await axios.get('/api/oldest_task').then(({data}) => {
+        if (data.status === 200) {
+          this.firstRecordDate = data.data.created_at
+          console.log( data.data.created_at )
+          this.loadMoreRecords()
+        } else {
+          this.$toast.error(`Getting of note unsuccessful`);
+        }
+      }).catch(() => {
+        this.$toast.error(`Getting of note unsuccessful`);
+      })
+    },
+    loadMoreRecords(){
+      if (this.current_date.isSame(moment(this.firstRecordDate), 'day')) {
+        this.loadMore = false;
+      } else if(this.current_date.isAfter(moment(this.firstRecordDate))) {
+        this.loadMore =  true;
+      } else {
+        this.loadMore = false;
+      }
     }
   },
   mounted() {
     this.getAllUserNotes()
+    this.getTheOldestNote()
     this.emitter.on("reload-table", () => {
       this.getAllUserNotes()
     })
