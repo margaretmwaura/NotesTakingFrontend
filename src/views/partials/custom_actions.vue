@@ -3,32 +3,55 @@
     <button @click="edit" id="button"><i class="fa fa-ellipsis-h"></i></button>
     <modal ref="modalName">
       <template v-slot:body>
-        <p><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
-        <p><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
+        <div v-if="rowData.pinned === 1">
+          <p @click="pinTask"><img src="../../assets/images/pin.png"/> UnPin from top</p>
+        </div>
+        <div v-else>
+          <p @click="pinTask"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
+        </div>
+        <p @click="addAMemo"><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
         <p><i class="fa fa-trash" aria-hidden="true"></i> Delete</p>
       </template>
-
     </modal>
-
+    <elavated_modal ref="add_a_memo">
+      <template v-slot:body>
+        <p>Add A Memo</p>
+        <textarea type="text" rows="2"/>
+        <div class="flex">
+          <button class="button">
+            Add Memo
+          </button>
+          <button class="button">
+            Cancel
+          </button>
+        </div>
+      </template>
+    </elavated_modal>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-// import eventBus from "../../eventBus";
 import modal from "./modal";
+import elavated_modal from "./elavated_modal"
+import axios from '../../backend-api'
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'custom_actions',
   components: {
-    modal
+    modal,
+    elavated_modal
+  },
+  computed: {
+    ...mapGetters(['getToken']),
   },
   props: {
     rowData: {
-        type : Object,
-        required: true
+      type: Object,
+      required: true
     },
     rowIndex: {
-        type: Number
+      type: Number
     }
   },
   methods: {
@@ -39,14 +62,53 @@ export default {
       // console.log("The distance is " + elDistanceToTop);
     },
     // TODO this function is difinately not going to be called this
-    deleteRow() {
+    deleteTask() {
       // this.$refs.modalName.closeModal();
     },
+    addAMemo() {
+      this.$refs.add_a_memo.openModal()
+    },
+    async pinTask() {
+      axios.defaults.headers.authorization = `Bearer ${this.getToken}`
+      await axios.post(`/api/note/${this.rowData.id}/pinNote`).then(
+        async ({data}) => {
+          if (data.status === 200) {
+            this.$toast.success(`Task has successfully being pinned`);
+            this.emitter.emit("reload-table");
+          } else {
+            this.$toast.error(`Pinning of a task was unsuccessful`);
+          }
+        }).catch(({response: {data}}) => {
+        this.$toast.error(`Pinning of a task was unsuccessful`);
+      })
+    }
   },
-  mounted(){
-
+  mounted() {
+    console.log(this.rowData)
+    console.log(typeof this.rowData.pinned)
   }
 
 }
 </script>
+
+<style lang="scss" scoped>
+@import "./src/assets/sass/colors.scss";
+.button {
+  background: $dark_purple;
+  font-size: 16px;
+  font-weight:bolder;
+  border-radius: 5px;
+  color:white;
+  margin-left: 2%;
+}
+
+textarea{
+  background-color:$dark_purple !important;
+}
+
+img{
+  height: 15px;
+  width: 15px;
+}
+</style>
 

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <input
-      type="checkbox"
-      v-model="checked"
-      true-value="1"
-      false-value="0"
-      @change="completeTask($event)"
-    />
+    <div class="flex-container">
+      <div v-if="rowData.pinned === 1">
+        <img src="../../assets/images/pin_tag.png"/>
+      </div>
+      <input
+        type="checkbox"
+        v-model="checked"
+        true-value="1"
+        false-value="0"
+        @change="completeTask($event)"
+      />
+    </div>
   </div>
 </template>
 
@@ -61,4 +66,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+img {
+  height: 15px;
+  width: 15px;
+  margin-top: -10px;
+}
+
+input{
+  margin-left: 10px;
+}
+
+</style>
 

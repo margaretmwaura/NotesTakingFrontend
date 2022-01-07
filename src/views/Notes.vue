@@ -28,9 +28,18 @@
                   :css="css.table"
                   :fields="fields"
                   :api-mode="false"
+                  :data="pinned_notes"
+                  pagination-path=""
+                  noDataTemplate="No pinned added">
+        </vuetable>
+        <vuetable ref="vuetable"
+                  :row-class="onRowClass"
+                  :css="css.table"
+                  :fields="fields"
+                  :api-mode="false"
                   :data="normal_notes"
                   pagination-path=""
-                  noDataTemplate="No notes added">
+                  noDataTemplate="No unpinned added">
         </vuetable>
       </div>
     </div>
@@ -226,5 +235,10 @@ export default {
 
 .vuetable-body {
   border: none !important;
+}
+
+.vuetable-empty-result{
+  padding: 0 !important;
+  background: #F1F5FE !important;
 }
 </style>
