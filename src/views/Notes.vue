@@ -30,6 +30,7 @@
                   :api-mode="false"
                   :data="pinned_notes"
                   pagination-path=""
+                  track-by="id"
                   noDataTemplate="No pinned added">
         </vuetable>
         <vuetable ref="vuetable"
@@ -39,6 +40,7 @@
                   :api-mode="false"
                   :data="normal_notes"
                   pagination-path=""
+                  track-by="id"
                   noDataTemplate="No unpinned added">
         </vuetable>
       </div>
@@ -141,8 +143,9 @@ export default {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
       await axios.get('/api/notes').then(({data}) => {
         if (data.status === 200) {
-
+          this.pinned_notes = [];
           this.pinned_notes = data.data.filter(note => note.pinned === 1)
+          this.normal_notes = [];
           this.normal_notes = data.data.filter(note => note.pinned === 0)
 
           //TODO This was useful in adding of a new variable to an object
@@ -152,9 +155,6 @@ export default {
           //   this.$set(item, 'fieldIndex', count)
           //   count++
           // })
-
-          console.log("Pinned notes " + this.pinned_notes[0])
-          console.log("Normal notes " + this.normal_notes[0])
 
         } else {
           this.$toast.error(`Getting of data unsuccessful`);
@@ -195,6 +195,7 @@ export default {
     this.getTheOldestNote()
     this.emitter.on("reload-table", () => {
       this.getAllUserNotes()
+      console.log("Reload")
     })
   },
 }

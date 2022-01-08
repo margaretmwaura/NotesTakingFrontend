@@ -4,10 +4,10 @@
     <modal ref="modalName">
       <template v-slot:body>
         <div v-if="rowData.pinned === 1">
-          <p @click="pinTask"><img src="../../assets/images/pin.png"/> UnPin from top</p>
+          <p @click="pinTask(0)"><img src="../../assets/images/pin.png"/> UnPin from top</p>
         </div>
         <div v-else>
-          <p @click="pinTask"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
+          <p @click="pinTask(1)"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
         </div>
         <p @click="addAMemo"><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
         <p><i class="fa fa-trash" aria-hidden="true"></i> Delete</p>
@@ -21,7 +21,7 @@
           <button class="button">
             Add Memo
           </button>
-          <button class="button">
+          <button class="button" @click="close_modal">
             Cancel
           </button>
         </div>
@@ -68,9 +68,9 @@ export default {
     addAMemo() {
       this.$refs.add_a_memo.openModal()
     },
-    async pinTask() {
+    async pinTask(pin_value) {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
-      await axios.post(`/api/note/${this.rowData.id}/pinNote`).then(
+      await axios.post(`/api/note/${this.rowData.id}/pinNote`,{"pin_value" : pin_value}).then(
         async ({data}) => {
           if (data.status === 200) {
             this.$toast.success(`Task has successfully being pinned`);
@@ -81,11 +81,12 @@ export default {
         }).catch(({response: {data}}) => {
         this.$toast.error(`Pinning of a task was unsuccessful`);
       })
+    },
+    close_modal(){
+      this.$refs.add_a_memo.closeModal()
     }
   },
   mounted() {
-    console.log(this.rowData)
-    console.log(typeof this.rowData.pinned)
   }
 
 }

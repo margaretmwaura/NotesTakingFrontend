@@ -62,7 +62,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.rowData.complete)
   }
 }
 </script>
