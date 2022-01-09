@@ -22,27 +22,19 @@
           Add
         </button>
       </div>
-      <div>
-        <vuetable ref="vuetable"
-                  :row-class="onRowClass"
-                  :css="css.table"
-                  :fields="fields"
-                  :api-mode="false"
-                  :data="pinned_notes"
-                  pagination-path=""
-                  track-by="id"
-                  noDataTemplate="No pinned added">
-        </vuetable>
-        <vuetable ref="vuetable"
-                  :row-class="onRowClass"
-                  :css="css.table"
-                  :fields="fields"
-                  :api-mode="false"
-                  :data="normal_notes"
-                  pagination-path=""
-                  track-by="id"
-                  noDataTemplate="No unpinned added">
-        </vuetable>
+      <div v-for="grouped_notes in notes">
+        <div v-for="nested_notes in grouped_notes">
+          <vuetable ref="vuetable"
+                    :row-class="onRowClass"
+                    :css="css.table"
+                    :fields="fields"
+                    :api-mode="false"
+                    :data="nested_notes"
+                    pagination-path=""
+                    track-by="id"
+                    noDataTemplate="No notes added">
+          </vuetable>
+        </div>
       </div>
     </div>
     <div class="cell small-6 medium-6 large-6">
@@ -72,8 +64,9 @@ export default {
       current_date: moment(),
       date_in_words: moment().format('dddd'),
       date_in_numbers: moment().format('MMM Do YY'),
-      pinned_notes: [],
-      normal_notes: [],
+      // pinned_notes: [],
+      // normal_notes: [],
+      notes: [],
       fields: [
         {
           name: '__component:complete_task',
@@ -89,7 +82,7 @@ export default {
         },
       ],
       firstRecordDate: moment(),
-      loadMore : true
+      loadMore: true
     }
   },
   computed: {
@@ -143,10 +136,14 @@ export default {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
       await axios.get('/api/notes').then(({data}) => {
         if (data.status === 200) {
-          this.pinned_notes = [];
-          this.pinned_notes = data.data.filter(note => note.pinned === 1)
-          this.normal_notes = [];
-          this.normal_notes = data.data.filter(note => note.pinned === 0)
+
+          this.notes = data.data
+
+          // TODO ... this was useful when the data was coming not grouped
+          // this.pinned_notes = [];
+          // this.pinned_notes = data.data.filter(note => note.pinned === 1)
+          // this.normal_notes = [];
+          // this.normal_notes = data.data.filter(note => note.pinned === 0)
 
           //TODO This was useful in adding of a new variable to an object
           // let count = 0;
@@ -171,7 +168,7 @@ export default {
       await axios.get('/api/oldest_task').then(({data}) => {
         if (data.status === 200) {
           this.firstRecordDate = data.data.created_at
-          console.log( data.data.created_at )
+          console.log(data.data.created_at)
           this.loadMoreRecords()
         } else {
           this.$toast.error(`Getting of note unsuccessful`);
@@ -180,11 +177,11 @@ export default {
         this.$toast.error(`Getting of note unsuccessful`);
       })
     },
-    loadMoreRecords(){
+    loadMoreRecords() {
       if (this.current_date.isSame(moment(this.firstRecordDate), 'day')) {
         this.loadMore = false;
-      } else if(this.current_date.isAfter(moment(this.firstRecordDate))) {
-        this.loadMore =  true;
+      } else if (this.current_date.isAfter(moment(this.firstRecordDate))) {
+        this.loadMore = true;
       } else {
         this.loadMore = false;
       }
@@ -238,7 +235,7 @@ export default {
   border: none !important;
 }
 
-.vuetable-empty-result{
+.vuetable-empty-result {
   padding: 0 !important;
   background: #F1F5FE !important;
 }
