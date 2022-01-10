@@ -105,6 +105,7 @@ export default {
 
 textarea{
   background-color:$dark_purple !important;
+  color: white;
 }
 
 img{

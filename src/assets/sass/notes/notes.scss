@@ -1,12 +1,12 @@
 .notes {
   margin-top: 60px;
-  height: 700px;
+  //height: 1000px;
   margin-left: 80px;
   width: 100%;
 
   &_content {
     background: $lighter_purple;
-    height: 700px;
+    //height: 1000px;
     padding-top: 50px;
     padding-left: 10px;
 
@@ -90,6 +90,18 @@
         margin-left: 2%;
       }
 
+    }
+
+    &_table {
+      &_title {
+        background: #F1F5FE !important;
+        text-align: left;
+        padding-left: 5%;
+
+        p{
+          margin-bottom: 0rem !important;
+        }
+      }
     }
   }
 }

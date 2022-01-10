@@ -22,7 +22,8 @@
           Add
         </button>
       </div>
-      <div v-for="grouped_notes in notes">
+      <div v-for="(grouped_notes, date) in notes" class="notes_content_table">
+        <div class="notes_content_table_title"><p>{{ moment(date).format('dddd') }}</p></div>
         <div v-for="nested_notes in grouped_notes">
           <vuetable ref="vuetable"
                     :row-class="onRowClass"
@@ -33,6 +34,13 @@
                     pagination-path=""
                     track-by="id"
                     noDataTemplate="No notes added">
+<!--            TODO check on how to use the slots in vuejs -->
+<!--            <template slot="details" slot-scope="props">-->
+<!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
+<!--              <p>maggie</p>-->
+<!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
+<!--            </template>-->
           </vuetable>
         </div>
       </div>
@@ -61,6 +69,7 @@ export default {
       note: "",
       week_display: false,
       daily_display: true,
+      moment: moment,
       current_date: moment(),
       date_in_words: moment().format('dddd'),
       date_in_numbers: moment().format('MMM Do YY'),
@@ -71,10 +80,13 @@ export default {
         {
           name: '__component:complete_task',
           title: '',
+          width: '70px',
         },
         {
-          name: 'task',
+          name: '__component:note_details',
+          // name: 'details',
           title: '',
+          width: '75%',
         },
         {
           name: '__component:custom_actions',
@@ -138,6 +150,7 @@ export default {
         if (data.status === 200) {
 
           this.notes = data.data
+          console.log(this.notes)
 
           // TODO ... this was useful when the data was coming not grouped
           // this.pinned_notes = [];

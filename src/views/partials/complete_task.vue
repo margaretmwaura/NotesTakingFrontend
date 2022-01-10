@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex-container">
-      <div v-if="rowData.pinned === 1">
+    <div class="flex-container" style="margin-top: 10px">
+      <div v-show="rowData.pinned === 1">
         <img src="../../assets/images/pin_tag.png"/>
       </div>
       <input

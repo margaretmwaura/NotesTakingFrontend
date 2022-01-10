@@ -46,7 +46,7 @@ export default {
     bottom: 0;
     left: 0;
     z-index: 1;
-    background: rgba(black, 0.5);
+    background: rgba(black, 0.7);
   }
 
   &__dialog {
