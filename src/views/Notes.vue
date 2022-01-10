@@ -35,12 +35,12 @@
                     track-by="id"
                     noDataTemplate="No notes added">
 <!--            TODO check on how to use the slots in vuejs -->
-<!--            <template slot="details" slot-scope="props">-->
+<!--            <div slot="details" slot-scope="props">-->
 <!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
 <!--              <p>maggie</p>-->
 <!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
 <!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
-<!--            </template>-->
+<!--            </div>-->
           </vuetable>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default {
         },
         {
           name: '__component:note_details',
-          // name: 'details',
+          // name: '__slot:details',
           title: '',
           width: '75%',
         },

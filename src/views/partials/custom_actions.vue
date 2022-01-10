@@ -9,16 +9,16 @@
         <div v-else>
           <p @click="pinTask(1)"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
         </div>
-        <p @click="addAMemo"><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
+        <p @click="openMemoModal"><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
         <p><i class="fa fa-trash" aria-hidden="true"></i> Delete</p>
       </template>
     </modal>
     <elavated_modal ref="add_a_memo">
       <template v-slot:body>
         <p>Add A Memo</p>
-        <textarea type="text" rows="2"/>
+        <textarea type="text" rows="2" v-model="memo"/>
         <div class="flex">
-          <button class="button">
+          <button class="button" @click="addAMemo">
             Add Memo
           </button>
           <button class="button" @click="close_modal">
@@ -54,6 +54,11 @@ export default {
       type: Number
     }
   },
+  data() {
+    return {
+      memo: '',
+    }
+  },
   methods: {
     edit() {
       this.$refs.modalName.openModal()
@@ -65,12 +70,28 @@ export default {
     deleteTask() {
       // this.$refs.modalName.closeModal();
     },
-    addAMemo() {
+    openMemoModal() {
       this.$refs.add_a_memo.openModal()
+    },
+    async addAMemo() {
+      axios.defaults.headers.authorization = `Bearer ${this.getToken}`
+      await axios.post(`/api/note/${this.rowData.id}/memo`, {"memo": this.memo}).then(
+        async ({data}) => {
+          if (data.status === 200) {
+            this.$toast.success(`Memo added successfully`);
+            this.emitter.emit("reload-table");
+          } else {
+            this.$toast.error(`There was a problem adding the memo`);
+          }
+          this.$refs.add_a_memo.closeModal()
+        }).catch(({response: {data}}) => {
+        this.$toast.error(`There was a problem adding the memo`);
+        this.$refs.add_a_memo.closeModal()
+      })
     },
     async pinTask(pin_value) {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
-      await axios.post(`/api/note/${this.rowData.id}/pinNote`,{"pin_value" : pin_value}).then(
+      await axios.post(`/api/note/${this.rowData.id}/pinNote`, {"pin_value": pin_value}).then(
         async ({data}) => {
           if (data.status === 200) {
             this.$toast.success(`Task has successfully being pinned`);
@@ -82,7 +103,7 @@ export default {
         this.$toast.error(`Pinning of a task was unsuccessful`);
       })
     },
-    close_modal(){
+    close_modal() {
       this.$refs.add_a_memo.closeModal()
     }
   },
@@ -94,21 +115,22 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/assets/sass/colors.scss";
+
 .button {
   background: $dark_purple;
   font-size: 16px;
-  font-weight:bolder;
+  font-weight: bolder;
   border-radius: 5px;
-  color:white;
+  color: white;
   margin-left: 2%;
 }
 
-textarea{
-  background-color:$dark_purple !important;
+textarea {
+  background-color: $dark_purple !important;
   color: white;
 }
 
-img{
+img {
   height: 15px;
   width: 15px;
 }
