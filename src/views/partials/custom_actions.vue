@@ -9,7 +9,12 @@
         <div v-else>
           <p @click="pinTask(1)"><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin to the top</p>
         </div>
-        <p @click="openMemoModal"><i class="fa fa-plus" aria-hidden="true"></i> Add a memo</p>
+        <div v-if="rowData.memo">
+          <p @click="openMemoModal"><i class="fa fa-edit" aria-hidden="true"></i> Edit memo</p>
+        </div>
+        <div v-else>
+          <p @click="openMemoModal"><i class="fa fa-plus" aria-hidden="true"></i> Add memo</p>
+        </div>
         <p><i class="fa fa-trash" aria-hidden="true"></i> Delete</p>
       </template>
     </modal>
@@ -18,8 +23,7 @@
         <p>Add A Memo</p>
         <textarea type="text" rows="2" v-model="memo"/>
         <div class="flex">
-          <button class="button" @click="addAMemo">
-            Add Memo
+          <button class="button" @click="addAMemo">{{action}}
           </button>
           <button class="button" @click="close_modal">
             Cancel
@@ -56,7 +60,8 @@ export default {
   },
   data() {
     return {
-      memo: '',
+      memo: this.rowData.memo,
+      action : this.rowData.memo ? "Edit Memo" : "Add Memo"
     }
   },
   methods: {

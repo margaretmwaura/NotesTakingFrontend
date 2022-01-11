@@ -6,12 +6,23 @@
         <p> || </p>
         <p v-on:click="displayWeekly()" :class="[week_display ? 'isDisplay' : 'isHide']"> Weekly </p>
       </div>
-      <div class="notes_content_daily">
+      <div class="notes_content_daily" v-if="daily_display">
         <i class="far fa-arrow-alt-circle-right" v-on:click="addByOneDay"></i>
         <p>
           <span>{{ date_in_words }}</span>
           <br>
           <span>{{ date_in_numbers }}</span>
+        </p>
+        <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay" v-if="loadMore"></i>
+      </div>
+      <div class="notes_content_daily" v-if="week_display">
+        <i class="far fa-arrow-alt-circle-right" v-on:click="addByOneDay"></i>
+        <p> 
+          <span>{{ moment(start_of_week).format('DD/MM/YYYY') }} - {{ moment(end_of_week).format('DD/MM/YYYY') }}</span>
+          <br>
+          <span>
+            {{ moment(start_of_week).format('dddd') }}  - {{ moment(end_of_week).format('dddd') }}
+          </span>
         </p>
         <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay" v-if="loadMore"></i>
       </div>
@@ -34,15 +45,18 @@
                     pagination-path=""
                     track-by="id"
                     noDataTemplate="No notes added">
-<!--            TODO check on how to use the slots in vuejs -->
-<!--            <div slot="details" slot-scope="props">-->
-<!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
-<!--              <p>maggie</p>-->
-<!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
-<!--            </div>-->
+            <!--            TODO check on how to use the slots in vuejs -->
+            <!--            <div slot="details" slot-scope="props">-->
+            <!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
+            <!--              <p>maggie</p>-->
+            <!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
+            <!--            </div>-->
           </vuetable>
         </div>
+      </div>
+      <div v-if="notes == null">
+        <p>You do not have notes for the said period of time</p>
       </div>
     </div>
     <div class="cell small-6 medium-6 large-6">
@@ -73,6 +87,8 @@ export default {
       current_date: moment(),
       date_in_words: moment().format('dddd'),
       date_in_numbers: moment().format('MMM Do YY'),
+      start_of_week: moment().startOf('week'),
+      end_of_week: moment().endOf('week'),
       // pinned_notes: [],
       // normal_notes: [],
       notes: [],
@@ -104,9 +120,10 @@ export default {
     },
   },
   watch: {
-    // current_date : () => {
-    //   this.date_in_words = this.current_date.format('dddd');
-    //   this.date_in_numbers = this.current_date.format('MMM Do YY')
+    // loadMore() {
+    //   if(this.loadMore){
+    //     this.getAllUserNotes();
+    //   }
     // }
   },
   methods: {
@@ -146,7 +163,7 @@ export default {
     },
     async getAllUserNotes() {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
-      await axios.get('/api/notes').then(({data}) => {
+      await axios.get(`/api/notes/${this.current_date}`).then(({data}) => {
         if (data.status === 200) {
 
           this.notes = data.data
@@ -192,12 +209,17 @@ export default {
     },
     loadMoreRecords() {
       if (this.current_date.isSame(moment(this.firstRecordDate), 'day')) {
+
         this.loadMore = false;
+        return;
+
       } else if (this.current_date.isAfter(moment(this.firstRecordDate))) {
         this.loadMore = true;
       } else {
         this.loadMore = false;
       }
+
+      this.getAllUserNotes();
     }
   },
   mounted() {
@@ -207,6 +229,7 @@ export default {
       this.getAllUserNotes()
       console.log("Reload")
     })
+    console.log("Start of week " + moment().startOf('week') + " the end of week is " + moment().endOf('week'));
   },
 }
 </script>
