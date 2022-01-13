@@ -16,15 +16,15 @@
         <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay" v-if="loadMore"></i>
       </div>
       <div class="notes_content_daily" v-if="week_display">
-        <i class="far fa-arrow-alt-circle-right" v-on:click="addByOneDay"></i>
-        <p> 
+        <i class="far fa-arrow-alt-circle-right" v-on:click="addByOneWeek"></i>
+        <p>
           <span>{{ moment(start_of_week).format('DD/MM/YYYY') }} - {{ moment(end_of_week).format('DD/MM/YYYY') }}</span>
           <br>
           <span>
             {{ moment(start_of_week).format('dddd') }}  - {{ moment(end_of_week).format('dddd') }}
           </span>
         </p>
-        <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneDay" v-if="loadMore"></i>
+        <i class="far fa-arrow-alt-circle-left" v-on:click="reduceByOneWeek" v-if="loadMore"></i>
       </div>
       <div class="notes_content_form">
         <i class="fa fa-bars icon"></i>
@@ -33,30 +33,49 @@
           Add
         </button>
       </div>
-      <div v-for="(grouped_notes, date) in notes" class="notes_content_table">
-        <div class="notes_content_table_title"><p>{{ moment(date).format('dddd') }}</p></div>
-        <div v-for="nested_notes in grouped_notes">
+      <div v-if="week_display">
+        <div v-for="(grouped_notes, date) in weekly_notes" class="notes_content_table">
+          <div class="notes_content_table_title"><p>{{ moment(date).format('dddd') }}</p></div>
+          <div v-for="nested_notes in grouped_notes">
+            <vuetable ref="vuetable"
+                      :row-class="onRowClass"
+                      :css="css.table"
+                      :fields="fields"
+                      :api-mode="false"
+                      :data="nested_notes"
+                      pagination-path=""
+                      track-by="id"
+                      noDataTemplate="No notes added">
+              <!--            TODO check on how to use the slots in vuejs -->
+              <!--            <div slot="details" slot-scope="props">-->
+              <!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
+              <!--              <p>maggie</p>-->
+              <!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
+              <!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
+              <!--            </div>-->
+            </vuetable>
+          </div>
+        </div>
+        <div v-if="weekly_notes.length === 0">
+          <p>You do not have notes for the said period of time</p>
+        </div>
+      </div>
+      <div v-if="daily_display">
+        <div v-for="grouped_notes in daily_notes" class="notes_content_table">
           <vuetable ref="vuetable"
                     :row-class="onRowClass"
                     :css="css.table"
                     :fields="fields"
                     :api-mode="false"
-                    :data="nested_notes"
+                    :data="grouped_notes"
                     pagination-path=""
                     track-by="id"
                     noDataTemplate="No notes added">
-            <!--            TODO check on how to use the slots in vuejs -->
-            <!--            <div slot="details" slot-scope="props">-->
-            <!--&lt;!&ndash;              <p>{{props}}</p>&ndash;&gt;-->
-            <!--              <p>maggie</p>-->
-            <!--&lt;!&ndash;              <span style="font-weight: bolder">{{ props.rowData.task }}</span>&ndash;&gt;-->
-            <!--&lt;!&ndash;              <span style="font-weight: normal">{{ props.rowData.created_at }}</span>&ndash;&gt;-->
-            <!--            </div>-->
           </vuetable>
         </div>
-      </div>
-      <div v-if="notes == null">
-        <p>You do not have notes for the said period of time</p>
+        <div v-if="daily_notes.length === 0">
+          <p>You do not have notes for the said period of time</p>
+        </div>
       </div>
     </div>
     <div class="cell small-6 medium-6 large-6">
@@ -80,7 +99,9 @@ export default {
   data() {
     return {
       css: CssConfig,
-      note: "",
+      note : "",
+      weekly_notes: [],
+      daily_notes: [],
       week_display: false,
       daily_display: true,
       moment: moment,
@@ -89,9 +110,6 @@ export default {
       date_in_numbers: moment().format('MMM Do YY'),
       start_of_week: moment().startOf('week'),
       end_of_week: moment().endOf('week'),
-      // pinned_notes: [],
-      // normal_notes: [],
-      notes: [],
       fields: [
         {
           name: '__component:complete_task',
@@ -133,7 +151,8 @@ export default {
           if (data.status === 200) {
             this.$toast.success(`Adding a task was successful`);
             this.note = ''
-            await this.getAllUserNotes();
+            await this.getAllUserWeeklyNotes();
+            await this.getAllUserDailyNotes();
           } else {
             this.$toast.error(`Adding of a task was unsuccessful`);
           }
@@ -161,14 +180,21 @@ export default {
       this.date_in_numbers = this.current_date.format('MMM Do YY')
       this.loadMoreRecords();
     },
-    async getAllUserNotes() {
+    addByOneWeek() {
+      this.start_of_week = this.start_of_week.add(7, 'days');
+      this.end_of_week = this.end_of_week.add(7, 'days');
+      this.loadMoreRecords();
+    },
+    reduceByOneWeek() {
+      this.start_of_week = this.start_of_week.subtract(7, 'days');
+      this.end_of_week = this.end_of_week.subtract(7, 'days');
+      this.loadMoreRecords();
+    },
+    async getAllUserWeeklyNotes() {
       axios.defaults.headers.authorization = `Bearer ${this.getToken}`
-      await axios.get(`/api/notes/${this.current_date}`).then(({data}) => {
+      await axios.get(`/api/notes/${this.start_of_week}/${this.end_of_week}`).then(({data}) => {
         if (data.status === 200) {
-
-          this.notes = data.data
-          console.log(this.notes)
-
+          this.weekly_notes = data.data
           // TODO ... this was useful when the data was coming not grouped
           // this.pinned_notes = [];
           // this.pinned_notes = data.data.filter(note => note.pinned === 1)
@@ -182,7 +208,31 @@ export default {
           //   this.$set(item, 'fieldIndex', count)
           //   count++
           // })
+        } else {
+          this.$toast.error(`Getting of data unsuccessful`);
+        }
+      }).catch(() => {
+        this.$toast.error(`Getting of data unsuccessful`);
+      })
+    },
+    async getAllUserDailyNotes() {
+      axios.defaults.headers.authorization = `Bearer ${this.getToken}`
+      await axios.get(`/api/notes/${this.current_date}`).then(({data}) => {
+        if (data.status === 200) {
+          this.daily_notes = data.data
+          // TODO ... this was useful when the data was coming not grouped
+          // this.pinned_notes = [];
+          // this.pinned_notes = data.data.filter(note => note.pinned === 1)
+          // this.normal_notes = [];
+          // this.normal_notes = data.data.filter(note => note.pinned === 0)
 
+          //TODO This was useful in adding of a new variable to an object
+          // let count = 0;
+          // this.normal_notes.forEach((item) => {
+          //   this.$set(item, 'itemIndex', count)
+          //   this.$set(item, 'fieldIndex', count)
+          //   count++
+          // })
         } else {
           this.$toast.error(`Getting of data unsuccessful`);
         }
@@ -208,28 +258,44 @@ export default {
       })
     },
     loadMoreRecords() {
-      if (this.current_date.isSame(moment(this.firstRecordDate), 'day')) {
 
-        this.loadMore = false;
-        return;
+      if (this.daily_display) {
 
-      } else if (this.current_date.isAfter(moment(this.firstRecordDate))) {
-        this.loadMore = true;
-      } else {
-        this.loadMore = false;
+        if (this.current_date.isSame(moment(this.firstRecordDate), 'day')) {
+          this.loadMore = false;
+          return;
+        } else if (this.current_date.isAfter(moment(this.firstRecordDate))) {
+          this.loadMore = true;
+        } else {
+          this.loadMore = false;
+        }
+        this.getAllUserDailyNotes();
       }
 
-      this.getAllUserNotes();
+      if(this.week_display){
+
+        if (this.start_of_week.isSame(moment(this.firstRecordDate), 'day')) {
+          this.loadMore = false;
+          return;
+        } else if (this.start_of_week.isAfter(moment(this.firstRecordDate))) {
+          this.loadMore = true;
+        } else {
+          this.loadMore = false;
+        }
+        this.getAllUserWeeklyNotes();
+      }
+
     }
   },
   mounted() {
-    this.getAllUserNotes()
+    this.getAllUserDailyNotes()
+    this.getAllUserWeeklyNotes()
     this.getTheOldestNote()
     this.emitter.on("reload-table", () => {
-      this.getAllUserNotes()
+      this.getAllUserDailyNotes()
+      this.getAllUserWeeklyNotes()
       console.log("Reload")
     })
-    console.log("Start of week " + moment().startOf('week') + " the end of week is " + moment().endOf('week'));
   },
 }
 </script>
