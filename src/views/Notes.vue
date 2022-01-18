@@ -151,6 +151,9 @@ export default {
           if (data.status === 200) {
             this.$toast.success(`Adding a task was successful`);
             this.note = ''
+            window.Echo.channel("note").listen("ReminderDue", e => {
+             // To get the node it shall be e.note
+            });
             await this.getAllUserWeeklyNotes();
             await this.getAllUserDailyNotes();
           } else {

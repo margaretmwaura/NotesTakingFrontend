@@ -7,6 +7,7 @@ import 'aos/dist/aos.css'
 import Toaster from '@meforma/vue-toaster';
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import Echo from "laravel-echo";
 // component had to be registred globally for it to work
 
 import VueSidebarMenu from 'vue-sidebar-menu'
@@ -50,6 +51,17 @@ requireComponent.keys().forEach(fileName => {
 })
 
 app.config.globalProperties.emitter = emitter;
+
+window.Pusher = require("pusher-js");
+
+window.Pusher.logToConsole = true;
+
+window.Echo = new Echo({
+  broadcaster: "pusher",
+  key: "51bb9ff682d150eff4d1",
+  cluster: "ap2",
+  host: "http://localhost:8080",
+});
 
 app.use(AOS.init())
   .use(Toaster)

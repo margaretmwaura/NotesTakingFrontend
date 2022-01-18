@@ -136,11 +136,10 @@ export default {
           } else {
             this.$toast.error(`There was a problem adding the memo`);
           }
-          this.$refs.add_a_memo.closeModal()
         }).catch(({response: {data}}) => {
         this.$toast.error(`There was a problem adding the memo`);
-        this.$refs.delete_note.closeModal()
       })
+      this.$refs.delete_note.closeModal()
     },
     close_memo_modal() {
       this.$refs.add_a_memo.closeModal()
