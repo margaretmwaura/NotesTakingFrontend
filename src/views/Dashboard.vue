@@ -32,25 +32,14 @@ export default {
     return {
       menu: [
         {
-          header: true,
-          title: 'Dashboard',
+          header: "Notes",
           hiddenOnCollapse: true
         },
         {
           href: '/notes',
           title: 'Notes',
-          icon: 'fa fa-user'
+          icon: 'fa fa-edit'
         },
-        {
-          href: '/products',
-          title: 'Products',
-          icon: 'fa fa-user'
-        },
-        {
-          href: '/order',
-          title: 'Make an order',
-          icon: 'fa fa-chart-area',
-        }
       ],
       collapsed: true,
       showLogout: false
@@ -91,13 +80,9 @@ export default {
     }
   },
   mounted() {
-    // console.log("we here")
-    // console.log(this.$store.state.token)
     this.$router.push({name: 'Notes'})
   },
   created() {
-    // console.log("we here")
-    // console.log(this.$store.state.token)
     this.$router.push({name: 'Notes'})
   }
 }

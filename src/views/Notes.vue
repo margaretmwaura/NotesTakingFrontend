@@ -18,7 +18,7 @@
       <div class="notes_content_daily" v-if="week_display">
         <i class="far fa-arrow-alt-circle-right" v-on:click="addByOneWeek"></i>
         <p>
-          <span>{{ moment(start_of_week).format('DD/MM/YYYY') }} - {{ moment(end_of_week).format('DD/MM/YYYY') }}</span>
+          <span>{{ moment(start_of_week).format('DD-MM-YY') }} - {{ moment(end_of_week).format('DD-MM-YY') }}</span>
           <br>
           <span>
             {{ moment(start_of_week).format('dddd') }}  - {{ moment(end_of_week).format('dddd') }}
@@ -35,7 +35,7 @@
       </div>
       <div v-if="week_display">
         <div v-for="(grouped_notes, date) in weekly_notes" class="notes_content_table">
-          <div class="notes_content_table_title"><p>{{ moment(date).format('dddd') }}</p></div>
+          <div class="notes_content_table_title"><p>{{ moment(date, 'DD-MM-YY').format('dddd') }}</p></div>
           <div v-for="nested_notes in grouped_notes">
             <vuetable ref="vuetable"
                       :row-class="onRowClass"
