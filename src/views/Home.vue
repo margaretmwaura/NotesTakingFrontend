@@ -2,7 +2,7 @@
   <!--    <img alt="Vue logo" src="../assets/images/logo.png">-->
     <div class="landing">
       <div class="grid-x landing_home">
-        <div data-aos="zoom-in-up" class="cell small-12 medium-5 large-5 landing_home_invite">
+        <div class="cell small-12 medium-6 large-6 landing_home_invite">
           <p>A digital product
             <br>
             design agency
@@ -14,8 +14,8 @@
             <h6>See the demo </h6>
           </div>
         </div>
-        <div class="cell small-12 medium-7 large-7 landing_home_think">
-          <img src="../assets/images/statics.png"/>
+        <div class="cell small-12 medium-6 large-6 landing_home_think">
+          <img src="../assets/images/statics.jpeg"/>
         </div>
       </div>
       <div class="grid-x landing_entire">

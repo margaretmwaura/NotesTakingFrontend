@@ -1,17 +1,17 @@
 <template>
   <div id="nav">
     <div class="grid-x main">
-      <div class="cell small-0 medium-3 large-3 ">
+      <div class="cell small-3 medium-3 large-3 ">
         <div class="main_logo">
           <img src="../assets/images/spiral.png"/>
         </div>
       </div>
-      <div class="cell small-12 medium-7 large-7 main_navbar">
+      <div class="cell small-7 medium-7 large-7 main_navbar">
         <router-link to="/" >Home</router-link>
         <router-link to="/signup" class="links">Signup </router-link>
         <img src="../assets/images/search.png"/>
       </div>
-      <div class="cell small-0 medium-2 large-2">
+      <div class="cell small-2 medium-2 large-2">
       </div>
     </div>
   </div>
