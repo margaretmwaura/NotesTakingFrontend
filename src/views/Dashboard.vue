@@ -79,10 +79,10 @@ export default {
       })
     }
   },
-  mounted() {
+  created() {
     this.$router.push({name: 'Notes'})
   },
-  created() {
+  mounted() {
     this.$router.push({name: 'Notes'})
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="!isAuthenticated">
+  <div v-show="!isAuthenticated">
     <landing></landing>
   </div>
-  <div v-else>
+  <div v-show="isAuthenticated">
     <dashboard></dashboard>
   </div>
 </template>
