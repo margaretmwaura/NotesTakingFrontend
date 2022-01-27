@@ -1,6 +1,6 @@
 <template>
   <div class="grid-x notes">
-    <div class="cell small-6 medium-6 large-6 notes_content">
+    <div class="cell small-12 medium-6 large-6 notes_content">
       <div class="notes_content_switch">
         <p v-on:click="displayDialy()" :class="[daily_display ? 'isDisplay' : 'isHide']"> Daily </p>
         <p> || </p>
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div class="cell small-6 medium-6 large-6">
+    <div class="cell small-12 medium-6 large-6">
     </div>
   </div>
 </template>

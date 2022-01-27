@@ -2,7 +2,7 @@
   <!--    <img alt="Vue logo" src="../assets/images/logo.png">-->
     <div class="landing">
       <div class="grid-x landing_home">
-        <div class="cell small-12 medium-6 large-6 landing_home_invite">
+        <div data-aos="fade-right" class="cell small-12 medium-6 large-6 landing_home_invite">
           <p>A digital product
             <br>
             design agency

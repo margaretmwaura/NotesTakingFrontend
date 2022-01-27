@@ -57,7 +57,7 @@ export default {
     z-index: 2;
     right: 42%;
     @media screen and (max-width: 992px) {
-      width: 90%;
+      right: 0;
     }
   }
 
