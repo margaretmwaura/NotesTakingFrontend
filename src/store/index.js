@@ -1,6 +1,7 @@
 import {createStore} from 'vuex'
 import router from '../router'
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8400"
@@ -55,5 +56,6 @@ export default createStore({
         }).catch(() => {
       })
     }
-  }
+  },
+  plugins: [createPersistedState()]
 })

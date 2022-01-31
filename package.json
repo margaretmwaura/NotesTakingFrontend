@@ -23,7 +23,8 @@
     "vue-sidebar-menu": "^5.1.2",
     "vue3-material": "^1.0.8",
     "vue3-vuetable": "^3.0.1",
-    "vuetable-2": "^1.7.5"
+    "vuetable-2": "^1.7.5",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
