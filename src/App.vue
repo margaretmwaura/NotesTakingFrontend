@@ -19,8 +19,17 @@ export default {
   },
   computed: {
     isAuthenticated : function(){
+      // this.$store.state.authenticated  && this.$store.state.user.email_verified_at && this.$store.state.user.email_verified_at !== null
       console.log("In App.vue " + this.$store.state.authenticated);
-      return this.$store.state.authenticated
+      console.log("Verified " + this.$store.state.user.email_verified_at != null)
+      console.log("Verified value is " + this.$store.state.user.email_verified_at)
+      if(this.$store.state.authenticated && this.$store.state.user.email_verified_at){
+        console.log("first if")
+        return true
+      }else{
+        console.log("second if")
+        return false
+      }
     },
   }
 }

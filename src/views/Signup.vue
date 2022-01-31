@@ -140,12 +140,17 @@ export default {
     async registerUser() {
       await axios.get('/sanctum/csrf-cookie')
       this.user.name = this.username
-      await axios.post("/register", this.user).then(({data}) => {
+      await axios.post("/register", this.user).then(
+        async ({data}) => {
         this.$store.dispatch('settoken', data.token)
+
         if (data.status === 200) {
-          this.$store.dispatch('login', data.data)
+
+          await this.$store.dispatch('login', data.data)
           this.$toast.success(`Signup was successful`);
-          this.$router.push({name: 'Notes'})
+          this.$toast.warning(`A verification email has been sent to your inbox.
+          Finish verifying your email to get started`);
+
         } else {
           this.$toast.error(`Signup failed`);
         }
@@ -159,10 +164,18 @@ export default {
       await axios.post("/login", this.auth).then(
         async ({data}) => {
           await this.$store.dispatch('settoken', data.token)
+
           if (data.status === 200) {
             await this.$store.dispatch('login', data.data)
-            this.$toast.success(`Login was successful`);
-            this.$router.push({name: 'Dashboard'})
+
+            if(data.data.email_verified_at){
+              this.$toast.success(`Login was successful`);
+              this.$router.push({name: 'Dashboard'})
+            }else{
+              this.$toast.warning(`A verification email was sent to your inbox.
+              Finish verifying your email to get started`);
+            }
+
           } else {
             this.$toast.error(`Login failed`);
           }

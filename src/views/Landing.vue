@@ -5,7 +5,6 @@
   <router-view/>
 </template>
 
-
 <script>
 // @ is an alias to /src
 import navbar from '../views/Navbar'
@@ -15,8 +14,14 @@ export default {
   },
   computed: {
     isAuthenticated : function(){
-      console.log("In App.vue " + this.$store.state.authenticated);
-      return this.$store.state.authenticated
+      console.log("In landing " + this.$store.state.authenticated);
+      if(this.$store.state.authenticated && this.$store.state.user.email_verified_at){
+        console.log("first if")
+        return true
+      }else{
+        console.log("second if")
+        return false
+      }
     },
   }
 }

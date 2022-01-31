@@ -1,5 +1,9 @@
 import {createStore} from 'vuex'
 import router from '../router'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:8400"
 
 export default createStore({
   state: {
@@ -14,7 +18,7 @@ export default createStore({
     user(state) {
       return state.user
     },
-    getToken(state){
+    getToken(state) {
       return state.token
     }
   },
@@ -30,7 +34,7 @@ export default createStore({
     }
   },
   actions: {
-    settoken({commit}, token){
+    settoken({commit}, token) {
       commit('SET_TOKEN', token)
     },
     login({commit}, user) {
@@ -40,6 +44,16 @@ export default createStore({
     logout({commit}) {
       commit('SET_USER', {})
       commit('SET_AUTHENTICATED', false)
+    },
+    async current_user({commit, state}) {
+      console.log("The token is " + state.token)
+      axios.defaults.headers.authorization = `Bearer ${state.token}`
+      await axios.get("/api/user").then(
+        async ({data}) => {
+          console.log("User data " + data)
+          commit('SET_USER', data)
+        }).catch(() => {
+      })
     }
   }
 })

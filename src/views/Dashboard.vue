@@ -5,7 +5,7 @@
         <img src="../assets/images/delivery-man.svg">
         <div v-on:click="showLogoutIcon" class="dashboard_topbar_dropdown"><i class="fa fa-caret-down"></i></div>
       </div>
-      <div class="dashboard_logout cell small-1 medium-1 large-1" v-show="showLogout">
+      <div class="dashboard_logout cell small-4 medium-1 large-1" v-show="showLogout">
         <p v-on:click="logOut">Log out</p>
       </div>
       <router-view>
@@ -36,7 +36,7 @@ export default {
           hiddenOnCollapse: true
         },
         {
-          href: '/notes',
+          href: `/notes/${true}`,
           title: 'Notes',
           icon: 'fa fa-edit'
         },
@@ -80,10 +80,10 @@ export default {
     }
   },
   created() {
-    this.$router.push({name: 'Notes'})
+    this.$router.push({name: 'Notes', params: { authenticatedBackend: true }})
   },
   mounted() {
-    this.$router.push({name: 'Notes'})
+    this.$router.push({name: 'Notes', params: { authenticatedBackend: true }})
   }
 }
 </script>
